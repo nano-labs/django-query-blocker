@@ -11,6 +11,7 @@ class NoExtraQueryException(Exception):
 
 class FakeCursor:
     """Cursor that raises exception on any attempt of query."""
+
     def _do_not_execute(self, *args, **kwargs):
         raise NoExtraQueryException(f"Prevented execution of query: {args[0]}")
 
@@ -43,19 +44,3 @@ class BlockExtraQueries(ContextDecorator):
 
 
 block_extra_queries = BlockExtraQueries()
-
-# @block_extra_queries
-# def do_stuff(tx):
-#     print("inside: ", tx)
-#     print(tx.source_format)
-
-
-# def run():
-#     tx = Transaction.objects.first()
-#     tx.data_source
-#     print("before: ", tx)
-#     do_stuff(tx)
-#     # with block_extra_queries:
-#     #     print("after: ", tx.source_format)
-
-# run()
